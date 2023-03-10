@@ -4,7 +4,8 @@ export const schema = buildSchema(`
 	type Query {
 		message: String,
 		departments: [String],
-		jobs: [Job]
+		jobs: [Job],
+		skills: [Skill]
 	}
 	
 	type Job {
@@ -15,5 +16,12 @@ export const schema = buildSchema(`
 		description: String,
 		skillList: String,
 		publicationDate: String
+	}
+
+	type Skill {
+		idCode: String,
+		name: String,
+		url: String,
+		description: String
 	}
 `);

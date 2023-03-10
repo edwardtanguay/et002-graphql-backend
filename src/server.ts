@@ -26,6 +26,9 @@ const root = {
 	},
 	jobs: () => {
 		return model.getJobs()
+	},
+	skills: () => {
+		return model.getSkills()
 	}
 }
 
