@@ -23,6 +23,11 @@ export const getApiInstructions = () => {
 	}
 </style>
 <h1>Jobs/Skills Backend</h1>
+<h2>GraphQL</h2>
+<ul>
+	<li><code><a href="/graphql">/graphql</a></code> - GraphQL</li>
+</ul>
+<h2>REST</h2>
 <ul>
 	<li><code><a href="/jobs">/jobs</a></code> - all jobs</li>
 	<li><code><a href="/skills">/skills</a></code> - all skills</li>
