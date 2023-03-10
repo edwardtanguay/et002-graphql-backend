@@ -4,7 +4,8 @@ import cors from 'cors';
 import logger from './logger.js';
 import * as config from './config.js';
 import { graphqlHTTP } from 'express-graphql';
-import { schema } from './schema.js';
+// import { schema } from './schema.js';
+import { GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList } from 'graphql';
 
 const app = express();
 app.use(cors());
@@ -12,29 +13,78 @@ app.use(logger);
 
 // GRAPHQL
 
-const root = {
-	message: () => {
-		return 'this is the message';
-	},
-	departments: () => {
-		return [
-			"Sales",
-			"Marketing",
-			"Development",
-			"Executive"
-		]
-	},
-	jobs: model.getJobs(), // NOTE: value
-	skills: () => { // NOTE: filter
-		return model.getSkills()
+const jobs = model.getJobs();
+
+const JobType = new GraphQLObjectType({
+	name: "Job",
+	fields: () => ({
+		id: { type: GraphQLInt },
+		title: { type: GraphQLString },
+		company: { type: GraphQLString },
+		url: { type: GraphQLString },
+		description: { type: GraphQLString },
+		skillList: { type: GraphQLString },
+		publicationDate: { type: GraphQLString },
+	})
+});
+
+const rootQuery = new GraphQLObjectType({
+	name: "RootQueryType",
+	fields: {
+		mainMessage: {
+			type: GraphQLString,
+			resolve(parent, args) {
+				return 'hello'
+			}
+		},
+		jobs: {
+			type: new GraphQLList(JobType),
+			args: { id: { type: GraphQLInt } },
+			resolve(parent, args) {
+				// if (args.id) {
+				// 	return jobs.find(m => m.id === args.id)
+				// } else {
+				// 	return jobs;
+				// }
+				return jobs;
+			}
+		}
 	}
-}
+});
+
+const mutation = new GraphQLObjectType({
+	name: "Mutation",
+	fields: {
+		createJob: {
+			type: JobType,
+			args: {
+				title: { type: GraphQLString },
+				company: { type: GraphQLString },
+				url: { type: GraphQLString }
+			},
+			resolve(parent, args) {
+				const newJob = {
+					id: jobs.length + 1,
+					title: args.title,
+					company: args.company,
+					url: args.url,
+					description: '(no value)',
+					skillList: '',
+					publicationDate: '',
+				};
+				jobs.push(newJob);
+				return newJob;
+			}
+		}
+	}
+});
+
+const schema = new GraphQLSchema({ query: rootQuery, mutation });
 
 app.use(
 	'/graphql',
 	graphqlHTTP({
 		schema,
-		rootValue: root,
 		graphiql: true
 	})
 );
