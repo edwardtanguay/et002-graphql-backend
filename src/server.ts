@@ -24,10 +24,8 @@ const root = {
 			"Executive"
 		]
 	},
-	jobs: () => {
-		return model.getJobs()
-	},
-	skills: () => {
+	jobs: model.getJobs(), // NOTE: value
+	skills: () => { // NOTE: filter
 		return model.getSkills()
 	}
 }
