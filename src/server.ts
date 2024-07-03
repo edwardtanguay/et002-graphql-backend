@@ -16,12 +16,16 @@ const root = {
 	message: () => {
 		return 'this is the message';
 	},
+	colors: () => {
+		return ['red', 'blue', 'green', 'pink']
+	},
 	departments: () => {
 		return [
 			"Sales",
 			"Marketing",
 			"Development",
-			"Executive"
+			"Executive",
+			"Human Resources"
 		]
 	},
 	jobs: model.getJobs(), // NOTE: value

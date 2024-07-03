@@ -3,6 +3,7 @@ import { buildSchema } from 'graphql';
 export const schema = buildSchema(`
 	type Query {
 		message: String,
+		colors: [String],
 		departments: [String],
 		jobs: [Job],
 		skills: [Skill]

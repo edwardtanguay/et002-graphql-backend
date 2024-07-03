@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { IJob, ISkill } from './interfaces.js';
-import * as config from './config.js';
 
 const jobs: IJob[] = JSON.parse(fs.readFileSync('./src/data/jobs.json', 'utf8'));
 const skills: ISkill[] = JSON.parse(fs.readFileSync('./src/data/skills.json', 'utf8'));
